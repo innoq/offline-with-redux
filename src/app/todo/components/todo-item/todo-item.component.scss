@@ -1,0 +1,15 @@
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+    border-radius: .2rem;
+    border: 1px solid var(--indigo-dye);
+    padding: .5rem;
+    &.offline {
+        background-color: var(--alabaster);
+    }
+    &.completed p {
+        text-decoration: line-through;
+    }
+}

@@ -3,14 +3,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { TodoService } from '../services/todo.service';
+import { TodoService } from '../../services/todo.service';
 import { addTodo, loadTodos, removeTodo, todoAdded, todoRemoved, todosLoaded, todoUpdated, updateTodo } from './todo.actions';
 import { Todo } from './todo.model';
 
 @Injectable()
 export class TodoEffects {
 
-    loadTodos$: Observable<Action | unknown> = createEffect(() => this.actions$.pipe(
+    loadTodos$: Observable<Action> = createEffect(() => this.actions$.pipe(
         ofType(loadTodos),
         mergeMap(() => this.todoService.getAll()
             .pipe(
@@ -19,7 +19,7 @@ export class TodoEffects {
         )
     );
 
-    addTodo$: Observable<Action | unknown>  = createEffect(() => this.actions$.pipe(
+    addTodo$: Observable<Action>  = createEffect(() => this.actions$.pipe(
         ofType(addTodo),
         mergeMap(action => this.todoService.createOne(action.todo).pipe(
             map((todo: Todo) => todoAdded({todo}))
@@ -27,7 +27,7 @@ export class TodoEffects {
         )
     );
 
-    updateTodo$: Observable<Action | unknown> = createEffect(() => this.actions$.pipe(
+    updateTodo$: Observable<Action> = createEffect(() => this.actions$.pipe(
         ofType(updateTodo),
         mergeMap(action => this.todoService.updateOne(action.todo).pipe(
             map((todo: Todo) => todoUpdated({ todo }))
@@ -35,10 +35,10 @@ export class TodoEffects {
         )
     );
 
-    deleteTodo$: Observable<Action | unknown> = createEffect(() => this.actions$.pipe(
+    deleteTodo$: Observable<Action> = createEffect(() => this.actions$.pipe(
         ofType(removeTodo),
         mergeMap(action => this.todoService.deleteOne(action.id).pipe(
-            map(() => todoRemoved({ id: action.id }))
+            map((id: string) => todoRemoved({ id }))
         ))
     )
     );

@@ -1,0 +1,4 @@
+<h2>List of Todos</h2>
+<ng-container *ngIf="todos$ | async as todos">
+    <app-todo-item *ngFor="let todo of todos" [todo]="todo" (completed)="onCompleted($event)"></app-todo-item>
+</ng-container>

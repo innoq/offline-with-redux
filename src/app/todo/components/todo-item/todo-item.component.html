@@ -1,0 +1,4 @@
+<div [ngClass]="classes()">
+    <p>{{ todo.title }}</p>
+    <input type="checkbox" name="completed" [checked]="todo.completed" (change)="complete()">
+</div>
