@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { todoAdded, todoRemoved, todoUpdated, todosLoaded } from './todo.actions';
+import { todoAdded, todoRemoved, todoUpdated, todosLoaded, replaceOfflineTodo } from './todo.actions';
 import { Todo } from './todo.model';
 
 export const initialState: readonly Todo[] = [];
@@ -13,5 +13,9 @@ export const todosReducer = createReducer(
         const index = state.findIndex((t: Todo) => t.id === todo.id);
         return Object.assign([], state, { [index]: todo });
     }),
-    on(todosLoaded, (state, { todos }) => todos),
+    on(todosLoaded, (_state, { todos }) => todos),
+    on(replaceOfflineTodo, (state, { id, todo }) => {
+        const index = state.findIndex((t: Todo) => t.id === id);
+        return Object.assign([], state, { [index]: todo });
+    }),
 );

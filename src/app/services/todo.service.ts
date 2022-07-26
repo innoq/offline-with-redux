@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, tap } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { Todo } from '../redux/todo/todo.model';
 import { OfflineService } from './offline.service';
 
@@ -12,7 +12,7 @@ export class TodoService {
 
     getAll(): Observable<Todo[]>{
         return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos').pipe(
-            catchError((e: Error) => this.offlineService.handleOfflineError(e, {
+            catchError((error: Error) => this.offlineService.handleOfflineError(error, {
                 defaultValue: Array<Todo>()
             }))
         );
@@ -26,7 +26,7 @@ export class TodoService {
                 todo.id = id.toString();
                 return todo;
             }),
-            catchError((e: Error) => this.offlineService.handleOfflineError(e, {
+            catchError((error: Error) => this.offlineService.handleOfflineError(error, {
                 defaultValue: <Todo>{
                     ...todo,
                     id: this.offlineId()
@@ -37,7 +37,7 @@ export class TodoService {
 
     updateOne(todo: Todo): Observable<Todo> {
         return this.http.patch<Todo>(`https://jsonplaceholder.typicode.com/todos/${todo.id}`, todo).pipe(
-            catchError((e: Error) => this.offlineService.handleOfflineError(e, {
+            catchError((error: Error) => this.offlineService.handleOfflineError(error, {
                 defaultValue: <Todo>{
                     ...todo,
                 }
@@ -48,7 +48,7 @@ export class TodoService {
     deleteOne(id: string): Observable<string> {
         return this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`).pipe(
             map(() => id),
-            catchError((e: Error) => this.offlineService.handleOfflineError(e, {
+            catchError((error: Error) => this.offlineService.handleOfflineError(error, {
                 defaultValue: id
             }))
         );

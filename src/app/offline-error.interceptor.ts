@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, first, flatMap, map, switchMap } from 'rxjs/operators';
+import { catchError, first, switchMap } from 'rxjs/operators';
 import { AppState } from './redux/app.model';
 import { OnlineStatus } from './redux/offline/offline.model';
 import { OfflineError } from './services/offline.error';
@@ -21,17 +21,14 @@ export class ErrorInterceptor implements HttpInterceptor {
             switchMap((status: OnlineStatus) => {
                 return next.handle(req).pipe(
                     catchError((e: HttpErrorResponse) => {
-                        if (status === OnlineStatus.OFFLINE) {
-                            const offlineError = new OfflineError('offline');
-                            offlineError.req = req;
-                            return throwError(() => offlineError);
-                        } else {
+                        if (status !== OnlineStatus.OFFLINE) {
                             return throwError(() => e);
                         }
+                        const offlineError = new OfflineError('offline', req);
+                        return throwError(() => offlineError);
                     })
                 )
             })
         )
     }
-
 }

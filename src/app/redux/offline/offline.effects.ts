@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { map, mergeAll, Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { OfflineService } from 'src/app/services/offline.service';
 import { AppState } from '../app.model';
+import { replaceOfflineTodo } from '../todo/todo.actions';
+import { Todo } from '../todo/todo.model';
 import { changeToOnline, removeOfflineRequest, startSynchingRequests, synchingFinished } from './offline.actions';
 import { OfflineRequest } from './offline.model';
 
@@ -15,20 +17,32 @@ export class OfflineEffects {
         map(() => startSynchingRequests())
     ));
 
-    resendRequests$ = createEffect(() => this.actions$.pipe(
+    private _resendRequests$ = createEffect(() => this.actions$.pipe(
         ofType(startSynchingRequests),
         concatLatestFrom(() => this.store.select((state: AppState) => state.offline.requests)),
-        map(([a, data]) => {;
-            return data;
-        }),
-        mergeAll(),
-        switchMap((request: OfflineRequest) => {
-            return this.offlineService.resendRequest(request.request).pipe(
-                tap(() => this.store.dispatch(removeOfflineRequest({ id: request.id })))
-            )
+        tap(([_action, requests]) => {
+            console.log('👀', requests);
+            requests.map((request: OfflineRequest) => {
+                console.log('🙂', request);
+                this.offlineService.resendRequest(request.request).pipe(
+                    tap((todo: Todo) => {
+                        // typicode always returns the same id, so we need to make up our own
+                        const id = Math.floor(Math.random() * 1000) + 1;
+                        todo.id = id.toString();
+                        this.store.dispatch(replaceOfflineTodo({ id: request.id, todo }));
+                        this.store.dispatch(removeOfflineRequest({ id: request.id }));
+                    })
+                ).subscribe();
+            })
         }),
         map(() => synchingFinished())
     ));
+    public get resendRequests$() {
+        return this._resendRequests$;
+    }
+    public set resendRequests$(value) {
+        this._resendRequests$ = value;
+    }
 
     constructor(
         private actions$: Actions,

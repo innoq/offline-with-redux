@@ -17,7 +17,6 @@ import { todosReducer } from './redux/todo/todo.reducer';
 import { TodoFormComponent } from './todo/components/todo-form/todo-form.component';
 import { TodoItemComponent } from './todo/components/todo-item/todo-item.component';
 import { TodoListComponent } from './todo/components/todo-list/todo-list.component';
-import { TodoPageComponent } from './todo/pages/todo-page/todo-page.component';
 
 
 @NgModule({
@@ -26,7 +25,6 @@ import { TodoPageComponent } from './todo/pages/todo-page/todo-page.component';
     TodoListComponent,
     TodoItemComponent,
     TodoFormComponent,
-    TodoPageComponent,
     OfflineBannerComponent
   ],
   imports: [

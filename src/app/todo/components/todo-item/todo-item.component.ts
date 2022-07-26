@@ -25,7 +25,7 @@ export class TodoItemComponent {
   }
 
   complete(): void {
-    const updatedTodo: Todo = { ...this.todo, completed: !this.todo.completed};
+    const updatedTodo: Todo = { ...this.todo, completed: !this.todo.completed };
     this.completed.emit(updatedTodo);
   }
 

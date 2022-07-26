@@ -16,3 +16,5 @@ export const todoUpdated = createAction('[Todo] Todo updated',
 export const loadTodos = createAction('[Todo] Load Todos');
 export const todosLoaded = createAction('[Todo] Todos loaded',
                                     props<{todos: Todo[]}>());
+export const replaceOfflineTodo = createAction('[Todo] Replace offline Todo',
+                                    props<{id: string, todo: Todo}>())
