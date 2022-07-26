@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.model';
 import { addTodo } from 'src/app/redux/todo/todo.actions';
@@ -12,14 +12,14 @@ import { addTodo } from 'src/app/redux/todo/todo.actions';
 })
 export class TodoFormComponent implements OnInit {
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-      this.form = new FormGroup({
-        title: new FormControl('', Validators.required),
-        completed: new FormControl(false)
+      this.form = new UntypedFormGroup({
+        title: new UntypedFormControl('', Validators.required),
+        completed: new UntypedFormControl(false)
       })
   }
 

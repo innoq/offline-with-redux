@@ -112,6 +112,5 @@
         }
       }
     }
-  },
-  "defaultProject": "offline-with-redux"
+  }
 }
