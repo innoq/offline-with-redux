@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.model';
 import { addTodo } from 'src/app/redux/todo/todo.actions';
@@ -12,20 +12,20 @@ import { addTodo } from 'src/app/redux/todo/todo.actions';
 })
 export class TodoFormComponent implements OnInit {
 
-  form!: UntypedFormGroup;
+  form!: FormGroup;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-      this.form = new UntypedFormGroup({
-        title: new UntypedFormControl('', Validators.required),
-        completed: new UntypedFormControl(false)
+      this.form = new FormGroup({
+        title: new FormControl<string>('', Validators.required),
+        completed: new FormControl<boolean>(false)
       })
   }
 
   onSaveTodo(): void {
     if (this.form.valid) {
-      this.store.dispatch(addTodo( { todo: { title: this.form.get('title')?.value, completed: this.form.get('completed')?.value }}))
+      this.store.dispatch(addTodo( { todo: { title: this.form.value.title, completed: this.form.value.completed }}))
       this.form.setValue({ title: '', completed: false });
     } else {
       this.form.markAllAsTouched();
