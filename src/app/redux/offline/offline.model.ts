@@ -1,16 +1,16 @@
-import { HttpRequest } from '@angular/common/http';
+import { HttpRequest } from "@angular/common/http";
 
 export enum OnlineStatus {
-    OFFLINE = 'OFFLINE',
-    ONLINE = 'ONLINE'
+  OFFLINE = "OFFLINE",
+  ONLINE = "ONLINE",
 }
 
 export interface OfflineRequest {
-    id: string;
-    request: HttpRequest<any>;
+  id: string;
+  request: HttpRequest<any>;
 }
 
 export interface OfflineState {
-    onlineStatus: OnlineStatus;
-    requests: readonly OfflineRequest[];
+  onlineStatus: OnlineStatus;
+  requests: readonly OfflineRequest[];
 }

@@ -22,8 +22,8 @@ dd {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 
@@ -62,9 +62,9 @@ select {
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
-   scroll-behavior: auto;
+    scroll-behavior: auto;
   }
-  
+
   *,
   *::before,
   *::after {
@@ -77,11 +77,12 @@ select {
 
 /* Some global settings */
 :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 1rem;
-    --columbia-blue: #bcd4deff;
-    --indigo-dye: #083d77ff;
-    --bright-maroon: #b9314fff;
-    --alabaster: #e5e6e0ff;
-    --pine-green: #136f63ff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  --columbia-blue: #bcd4deff;
+  --indigo-dye: #083d77ff;
+  --bright-maroon: #b9314fff;
+  --alabaster: #e5e6e0ff;
+  --pine-green: #136f63ff;
 }
